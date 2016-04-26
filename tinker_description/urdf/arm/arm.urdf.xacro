@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+    <xacro:property name="arm_origin_x" value="0.12"/>
+    <xacro:property name="arm_origin_y" value="0"/>
+    <xacro:property name="arm_origin_z" value="0.77"/>
+
+    <link name="arm_link">
+        <visual>
+            <geometry>
+                <box size="0.2 0.1 0.03"/>
+            </geometry>
+            <material name="green"/>
+        </visual>
+        <collision>
+            <geometry>
+                <box size="0.2 0.1 0.03"/>
+            </geometry>
+        </collision>
+        <inertial>
+            <mass value="1"/>
+            <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy="0.0" iyz="0.0" izz="0.0"/>
+        </inertial>
+    </link>
+
+    <joint name="arm_origin_joint" type="prismatic">
+        <axis xyz="0 0 1"/>
+        <parent link="base_link"/>
+        <child link="arm_link"/>
+        <origin xyz="${arm_origin_x} ${arm_origin_y} ${arm_origin_z}" rpy="0 0 0"/>
+        <limit effort="1000.0" lower="0" upper="0.5" velocity="0.5"/>
+    </joint>
+</robot>
