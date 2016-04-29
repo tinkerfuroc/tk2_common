@@ -6,6 +6,7 @@
        name="tinker">
 
     <xacro:include filename="$(find pr2_description)/urdf/common.xacro"/>
+    <xacro:include filename="$(find pr2_description)/urdf/gripper_v0/gripper.urdf.xacro" />
     <xacro:include filename="$(find tinker_description)/urdf/materials.xacro"/>
 
     <xacro:include filename="$(find tinker_description)/urdf/base/base.urdf.xacro"/>

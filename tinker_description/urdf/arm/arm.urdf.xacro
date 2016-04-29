@@ -4,16 +4,23 @@
     <xacro:property name="arm_origin_y" value="0"/>
     <xacro:property name="arm_origin_z" value="0.77"/>
 
-    <link name="arm_link">
+    <joint name="arm_origin_joint" type="prismatic">
+        <axis xyz="0 0 1"/>
+        <parent link="base_link"/>
+        <child link="arm_base_link"/>
+        <origin xyz="${arm_origin_x} ${arm_origin_y} ${arm_origin_z}" rpy="0 0 0"/>
+        <limit effort="1000.0" lower="0" upper="0.4" velocity="0.5"/>
+    </joint>
+    <link name="arm_base_link">
         <visual>
             <geometry>
-                <box size="0.2 0.1 0.03"/>
+                <box size="0.1 0.1 0.04"/>
             </geometry>
             <material name="green"/>
         </visual>
         <collision>
             <geometry>
-                <box size="0.2 0.1 0.03"/>
+                <box size="0.1 0.1 0.04"/>
             </geometry>
         </collision>
         <inertial>
@@ -22,11 +29,151 @@
         </inertial>
     </link>
 
-    <joint name="arm_origin_joint" type="prismatic">
+    <joint name="shoulder_rotation_joint" type="revolute">
         <axis xyz="0 0 1"/>
-        <parent link="base_link"/>
-        <child link="arm_link"/>
-        <origin xyz="${arm_origin_x} ${arm_origin_y} ${arm_origin_z}" rpy="0 0 0"/>
-        <limit effort="1000.0" lower="0" upper="0.5" velocity="0.5"/>
+        <parent link="arm_base_link"/>
+        <child link="shoulder_base_link"/>
+        <limit effort="1000.0" lower="${-M_PI/2}" upper="${M_PI/2}" velocity="0.5"/>
+        <origin xyz="0 0 0" rpy="0 0 ${M_PI/2}"/>
     </joint>
+    <link name="shoulder_base_link">
+        <visual>
+            <geometry>
+                <cylinder length="0.1" radius="0.04"/>
+            </geometry>
+            <origin xyz="0 0 0.05" rpy="0 0 ${M_PI}"/>
+            <material name="red"/>
+        </visual> 
+        <collision>
+            <geometry>
+                <cylinder length="0.1" radius="0.04"/>
+            </geometry>
+            <origin xyz="0 0 0.05" rpy="0 0 ${M_PI}"/>
+        </collision> 
+        <inertial>
+            <mass value="1"/>
+            <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy="0.0" iyz="0.0" izz="0.0"/>
+        </inertial>
+    </link>
+
+    <joint name="shoulder_flexion_joint" type="revolute">
+        <axis xyz="1 0 0"/>
+        <parent link="shoulder_base_link"/>
+        <child link="shoulder_link"/>
+        <limit effort="1000.0" lower="0" upper="${M_PI/4}" velocity="0.5"/>
+        <origin xyz="0 0 0.1" rpy="0 0 0"/>
+    </joint>
+    <link name="shoulder_link">
+        <visual>
+            <geometry>
+                <cylinder length="0.34" radius="0.04"/>
+            </geometry>
+            <origin xyz="0 0 0.17" rpy="0 0 0"/>
+            <material name="blue"/>
+        </visual> 
+        <collision>
+            <geometry>
+                <cylinder length="0.34" radius="0.04"/>
+            </geometry>
+            <origin xyz="0 0 0.17" rpy="0 0 0"/>
+        </collision> 
+        <inertial>
+            <mass value="1"/>
+            <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy="0.0" iyz="0.0" izz="0.0"/>
+        </inertial>
+    </link>
+    
+    <joint name="elbow_joint" type="revolute">
+        <axis xyz="1 0 0"/>
+        <parent link="shoulder_link"/>
+        <child link="elbow_link"/>
+        <limit effort="1000.0" lower="${M_PI/6}" upper="${M_PI}" velocity="0.5"/>
+        <origin xyz="0 0 0.34" rpy="0 ${M_PI} 0"/>
+    </joint>
+    <link name="elbow_link">
+        <visual>
+            <geometry>
+                <cylinder length="0.34" radius="0.04"/>
+            </geometry>
+            <origin xyz="0 0 0.17" rpy="0 0 0"/>
+            <material name="white"/>
+        </visual> 
+        <collision>
+            <geometry>
+                <cylinder length="0.34" radius="0.04"/>
+            </geometry>
+            <origin xyz="0 0 0.17" rpy="0 0 0"/>
+        </collision> 
+        <inertial>
+            <mass value="1"/>
+            <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy="0.0" iyz="0.0" izz="0.0"/>
+        </inertial>
+    </link>
+
+    <joint name="wrist_deviation_joint" type="revolute">
+        <axis xyz="0 1 0"/>
+        <parent link="elbow_link"/>
+        <child link="wrist_deviation_link"/>
+        <limit effort="1000.0" lower="${-M_PI/2}" upper="${M_PI/2}" velocity="0.5"/>
+        <origin xyz="0 0 0.34" rpy="0 0 0"/>
+    </joint>
+    <link name="wrist_deviation_link">
+        <visual>
+            <geometry>
+                <cylinder length="0.10" radius="0.04"/>
+            </geometry>
+            <origin xyz="0 0 0.05" rpy="0 0 0"/>
+            <material name="green"/>
+        </visual> 
+        <collision>
+            <geometry>
+                <cylinder length="0.10" radius="0.04"/>
+            </geometry>
+            <origin xyz="0 0 0.5" rpy="0 0 0"/>
+        </collision> 
+        <inertial>
+            <mass value="1"/>
+            <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy="0.0" iyz="0.0" izz="0.0"/>
+        </inertial>
+    </link>
+
+    <joint name="wrist_extension_joint" type="revolute">
+        <axis xyz="1 0 0"/>
+        <parent link="wrist_deviation_link"/>
+        <child link="wrist_extension_link"/>
+        <limit effort="1000.0" lower="${-M_PI/2}" upper="${M_PI/2}" velocity="0.5"/>
+        <origin xyz="0 0 0.1" rpy="0 0 0"/>
+    </joint>
+    <link name="wrist_extension_link">
+        <visual>
+            <geometry>
+                <cylinder length="0.10" radius="0.04"/>
+            </geometry>
+            <origin xyz="0 0 0.05" rpy="0 0 0"/>
+            <material name="blue"/>
+        </visual> 
+        <collision>
+            <geometry>
+                <cylinder length="0.10" radius="0.04"/>
+            </geometry>
+            <origin xyz="0 0 0.5" rpy="0 0 0"/>
+        </collision> 
+        <inertial>
+            <mass value="1"/>
+            <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy="0.0" iyz="0.0" izz="0.0"/>
+        </inertial>
+    </link>
+    <xacro:pr2_gripper_v0 reflect="-1.0" side="" parent="wrist_extension_link"
+        screw_reduction="${4.0/1000.0}"
+        gear_ratio="${(729.0/25.0)*(22.0/16.0)}"
+        theta0="${3.6029*M_PI/180.0}"
+        phi0="${29.7089*M_PI/180.0}"
+        t0="${-0.1914/1000.0}"
+        L0="${37.5528/1000.0}"
+        h="${0.0/1000.0}"
+        a="${68.3698/1000.0}"
+        b="${43.3849/1000.0}"
+        r="${91.5/1000.0}">
+        <origin xyz="0 0 0.08" rpy="0 ${-M_PI/2} ${M_PI/2}" />
+    </xacro:pr2_gripper_v0>
 </robot>
