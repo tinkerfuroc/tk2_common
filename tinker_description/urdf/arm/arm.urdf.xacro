@@ -2,7 +2,12 @@
 <robot xmlns:xacro="http://ros.org/wiki/xacro">
     <xacro:property name="arm_origin_x" value="0.12"/>
     <xacro:property name="arm_origin_y" value="0"/>
-    <xacro:property name="arm_origin_z" value="0.77"/>
+    <xacro:property name="arm_origin_z" value="0.54"/>
+    <xacro:property name="shoulder_base_link_length" value="0.06"/>
+    <xacro:property name="shoulder_link_length" value="0.41"/>
+    <xacro:property name="elbow_link_length" value="0.32"/>
+    <xacro:property name="wrist_deviation_link_length" value="0.09"/>
+    <xacro:property name="wrist_extension_link_length" value="0.10"/>
 
     <joint name="arm_origin_joint" type="fixed">
         <parent link="base_link"/>
@@ -47,16 +52,16 @@
     <link name="shoulder_base_link">
         <visual>
             <geometry>
-                <cylinder length="0.1" radius="0.04"/>
+                <cylinder length="${shoulder_base_link_length}" radius="0.04"/>
             </geometry>
-            <origin xyz="0 0 0.05" rpy="0 0 ${M_PI}"/>
+            <origin xyz="0 0 ${shoulder_base_link_length/2}" rpy="0 0 ${M_PI}"/>
             <material name="red"/>
         </visual> 
         <collision>
             <geometry>
-                <cylinder length="0.1" radius="0.04"/>
+                <cylinder length="${shoulder_base_link_length}" radius="0.04"/>
             </geometry>
-            <origin xyz="0 0 0.05" rpy="0 0 ${M_PI}"/>
+            <origin xyz="0 0 ${shoulder_base_link_length/2}" rpy="0 0 ${M_PI}"/>
         </collision> 
         <inertial>
             <mass value="1"/>
@@ -69,21 +74,21 @@
         <parent link="shoulder_base_link"/>
         <child link="shoulder_link"/>
         <limit effort="1000.0" lower="0" upper="${M_PI/2}" velocity="0.5"/>
-        <origin xyz="0 0 0.1" rpy="${-M_PI/2} 0 ${M_PI}"/>
+        <origin xyz="0 0 ${shoulder_base_link_length}" rpy="${-M_PI/2} 0 ${M_PI}"/>
     </joint>
     <link name="shoulder_link">
         <visual>
             <geometry>
-                <cylinder length="0.34" radius="0.04"/>
+                <cylinder length="${shoulder_link_length}" radius="0.04"/>
             </geometry>
-            <origin xyz="0 0 0.17" rpy="0 0 0"/>
+            <origin xyz="0 0 ${shoulder_link_length/2}" rpy="0 0 0"/>
             <material name="blue"/>
         </visual> 
         <collision>
             <geometry>
-                <cylinder length="0.34" radius="0.04"/>
+                <cylinder length="${shoulder_link_length}" radius="0.04"/>
             </geometry>
-            <origin xyz="0 0 0.17" rpy="0 0 0"/>
+            <origin xyz="0 0 ${shoulder_link_length/2}" rpy="0 0 0"/>
         </collision> 
         <inertial>
             <mass value="1"/>
@@ -96,21 +101,21 @@
         <parent link="shoulder_link"/>
         <child link="elbow_link"/>
         <limit effort="1000.0" lower="0" upper="${M_PI}" velocity="0.5"/>
-        <origin xyz="0 0 0.34" rpy="0 0 ${M_PI}"/>
+        <origin xyz="0 0 ${shoulder_link_length}" rpy="0 0 ${M_PI}"/>
     </joint>
     <link name="elbow_link">
         <visual>
             <geometry>
-                <cylinder length="0.34" radius="0.04"/>
+                <cylinder length="${elbow_link_length}" radius="0.04"/>
             </geometry>
-            <origin xyz="0 0 0.17" rpy="0 0 0"/>
+            <origin xyz="0 0 ${elbow_link_length/2}" rpy="0 0 0"/>
             <material name="white"/>
         </visual> 
         <collision>
             <geometry>
-                <cylinder length="0.34" radius="0.04"/>
+                <cylinder length="${elbow_link_length}" radius="0.04"/>
             </geometry>
-            <origin xyz="0 0 0.17" rpy="0 0 0"/>
+            <origin xyz="0 0 ${elbow_link_length/2}" rpy="0 0 0"/>
         </collision> 
         <inertial>
             <mass value="1"/>
@@ -123,21 +128,21 @@
         <parent link="elbow_link"/>
         <child link="wrist_deviation_link"/>
         <limit effort="1000.0" lower="${M_PI/2}" upper="${M_PI*3/2}" velocity="0.5"/>
-        <origin xyz="0 0 0.34" rpy="${M_PI} 0 ${M_PI}"/>
+        <origin xyz="0 0 ${elbow_link_length}" rpy="${M_PI} 0 ${M_PI}"/>
     </joint>
     <link name="wrist_deviation_link">
         <visual>
             <geometry>
-                <cylinder length="0.10" radius="0.04"/>
+                <cylinder length="${wrist_deviation_link_length}" radius="0.04"/>
             </geometry>
-            <origin xyz="0 0 0.05" rpy="0 0 0"/>
+            <origin xyz="0 0 ${wrist_deviation_link_length/2}" rpy="0 0 0"/>
             <material name="green"/>
         </visual> 
         <collision>
             <geometry>
-                <cylinder length="0.10" radius="0.04"/>
+                <cylinder length="${wrist_deviation_link_length}" radius="0.04"/>
             </geometry>
-            <origin xyz="0 0 0.5" rpy="0 0 0"/>
+            <origin xyz="0 0 ${wrist_deviation_link_length/2}" rpy="0 0 0"/>
         </collision> 
         <inertial>
             <mass value="1"/>
@@ -150,38 +155,25 @@
         <parent link="wrist_deviation_link"/>
         <child link="wrist_extension_link"/>
         <limit effort="1000.0" lower="${M_PI/2}" upper="${M_PI*3/2}" velocity="0.5"/>
-        <origin xyz="0 0 0.1" rpy="0 ${M_PI} 0"/>
+        <origin xyz="0 0 ${wrist_deviation_link_length}" rpy="0 ${M_PI} 0"/>
     </joint>
     <link name="wrist_extension_link">
         <visual>
             <geometry>
-                <cylinder length="0.10" radius="0.04"/>
+                <cylinder length="${wrist_extension_link_length}" radius="0.04"/>
             </geometry>
-            <origin xyz="0 0 0.05" rpy="0 0 0"/>
+            <origin xyz="0 0 ${wrist_extension_link_length/2}" rpy="0 0 0"/>
             <material name="blue"/>
         </visual> 
         <collision>
             <geometry>
-                <cylinder length="0.10" radius="0.04"/>
+                <cylinder length="${wrist_extension_link_length}" radius="0.04"/>
             </geometry>
-            <origin xyz="0 0 0.5" rpy="0 0 0"/>
+            <origin xyz="0 0 ${wrist_extension_link_length/2}" rpy="0 0 0"/>
         </collision> 
         <inertial>
             <mass value="1"/>
             <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy="0.0" iyz="0.0" izz="0.0"/>
         </inertial>
     </link>
-    <!--xacro:pr2_gripper_v0 reflect="-1.0" side="" parent="wrist_extension_link"
-        screw_reduction="${4.0/1000.0}"
-        gear_ratio="${(729.0/25.0)*(22.0/16.0)}"
-        theta0="${3.6029*M_PI/180.0}"
-        phi0="${29.7089*M_PI/180.0}"
-        t0="${-0.1914/1000.0}"
-        L0="${37.5528/1000.0}"
-        h="${0.0/1000.0}"
-        a="${68.3698/1000.0}"
-        b="${43.3849/1000.0}"
-        r="${91.5/1000.0}">
-        <origin xyz="0 0 0.08" rpy="0 ${-M_PI/2} ${M_PI/2}" />
-    </xacro:pr2_gripper_v0-->
 </robot>

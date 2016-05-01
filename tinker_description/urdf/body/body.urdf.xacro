@@ -3,7 +3,7 @@
 
     <xacro:property name="base_height" value="0.15"/>
     <xacro:property name="pillar_x" value="0"/>
-    <xacro:property name="pillar_y" value="0.20"/>
+    <xacro:property name="pillar_y" value="0.10"/>
 
     <link name="pillar">
         <visual>
@@ -11,7 +11,7 @@
                 <cylinder length="1.00" radius="0.05"/>
             </geometry>
             <origin xyz="0 0 0.5" rpy="0 0 0"/>
-            <material name="white"/>
+            <material name="orange"/>
         </visual>
         <collision>
             <geometry>
@@ -34,6 +34,6 @@
 
     <xacro:include filename="$(find pr2_description)/urdf/sensors/kinect2.urdf.xacro"/>
     <xacro:kinect2_v0 name="kinect" parent="pillar">
-        <origin xyz="0 0 0.9" rpy="0 0 0"/>
+        <origin xyz="0.06 0 0.9" rpy="0 0 0"/>
     </xacro:kinect2_v0>
 </robot>
