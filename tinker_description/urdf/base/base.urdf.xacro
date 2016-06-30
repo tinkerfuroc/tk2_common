@@ -11,7 +11,7 @@
     <xacro:property name="base_width" value="0.52"/>
     <xacro:property name="base_height" value="0.18"/>
 
-    <xacro:property name="base_laser_x" value="0.30"/>
+    <xacro:property name="base_laser_x" value="0.0"/>
     <xacro:property name="base_laser_y" value="0"/>
     <xacro:property name="base_laser_z" value="0.185"/>
 

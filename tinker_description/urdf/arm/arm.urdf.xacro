@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://ros.org/wiki/xacro">
-    <xacro:property name="arm_origin_x" value="0.12"/>
-    <xacro:property name="arm_origin_y" value="0"/>
-    <xacro:property name="arm_origin_z" value="0.69"/>
+    <xacro:property name="arm_origin_x" value="0.15"/>
+    <xacro:property name="arm_origin_y" value="-0.06"/>
+    <xacro:property name="arm_origin_z" value="0.71"/>
     <xacro:property name="shoulder_base_link_length" value="0.06"/>
     <xacro:property name="shoulder_link_length" value="0.41"/>
     <xacro:property name="elbow_link_length" value="0.32"/>
