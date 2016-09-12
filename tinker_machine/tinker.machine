@@ -1,5 +1,5 @@
 <launch>
     <machine name="iarc" address="iarc.furoc.net" default="true"/>
     <machine name="zynq" address="zynq.furoc.net" user="root" env-loader="/root/env-loader.sh"/>
-    <machine name="hyperv-linux" address="hyperv-linux.furoc.net" user="furoc" env-loader="/home/furoc/env-loader.sh"/>
+    <!--machine name="hyperv-linux" address="hyperv-linux.furoc.net" user="furoc" env-loader="/home/furoc/env-loader.sh"/-->
 </launch>
