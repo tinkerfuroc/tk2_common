@@ -16,7 +16,7 @@
         <parent link="virtual_x_link" />
         <child link="virtual_y_link" />
         <origin rpy="0 0 0" />
-        <limit lower="-1" upper="1" velocity="0.2" effort="10000"/>
+        <limit lower="-1000" upper="1000" velocity="0.2" effort="10000"/>
     </joint>
     <link name="virtual_y_link"/>
     <joint name="virtual_y_joint" type="prismatic">
@@ -24,7 +24,7 @@
         <child link="virtual_yaw_link" />
         <origin rpy="0 0 0" />
         <axis xyz="0 1 0" />
-        <limit lower="-1" upper="1" velocity="0.2" effort="10000"/>
+        <limit lower="-1000" upper="1000" velocity="0.2" effort="10000"/>
     </joint>
     <link name="virtual_yaw_link"/>
     <joint name="virtual_yaw_joint" type="continuous">
