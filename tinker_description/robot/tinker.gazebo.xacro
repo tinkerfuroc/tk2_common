@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<robot xmlns:sensor="http://playerstage.sourceforge.net/gazebo/xmlschema/#sensor"
+       xmlns:controller="http://playerstage.sourceforge.net/gazebo/xmlschema/#controller"
+       xmlns:interface="http://playerstage.sourceforge.net/gazebo/xmlschema/#interface"
+       xmlns:xacro="http://ros.org/wiki/xacro">
+    <!-- ros_control plugin -->
+    <gazebo>
+        <plugin filename="libgazebo_ros_control.so" name="gazebo_ros_control">
+            <robotNamespace>/tinker</robotNamespace>
+        </plugin>
+    </gazebo>
+
+    <xacro:macro name="transmission_block" params="joint_name">
+        <transmission name="trans_${joint_name}">
+            <type>transmission_interface/SimpleTransmission</type>
+            <joint name="${joint_name}">
+                <hardwareInterface>PositionJointInterface</hardwareInterface>
+            </joint>
+            <actuator name="motor_${joint_name}">
+                <hardwareInterface>PositionJointInterface</hardwareInterface>
+                <mechanicalReduction>1</mechanicalReduction>
+            </actuator>
+        </transmission>
+    </xacro:macro>
+
+    <xacro:transmission_block joint_name="virtual_x_joint"/>
+    <xacro:transmission_block joint_name="virtual_y_joint"/>
+    <xacro:transmission_block joint_name="virtual_yaw_joint"/>
+    <xacro:transmission_block joint_name="arm_base_joint"/>
+    <xacro:transmission_block joint_name="shoulder_flexion_joint"/>
+    <xacro:transmission_block joint_name="elbow_joint"/>
+    <xacro:transmission_block joint_name="wrist_extension"/>
+
+</robot>

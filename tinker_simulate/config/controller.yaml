@@ -1,0 +1,38 @@
+tinker:
+    # Publish all joint states -----------------------------------
+    joint_state_controller:
+        type: joint_state_controller/JointStateController
+        joints:
+            -virtual_x_joint
+            -virtual_y_joint
+            -virtual_yaw_joint
+        publish_rate: 20
+
+    # Position Controllers ---------------------------------------
+    virtual_x_joint_position_controller:
+        type: position_controllers/JointPositionController
+        joint: virtual_x_joint
+
+    virtual_y_joint_position_controller:
+        type: position_controllers/JointPositionController
+        joint: virtual_y_joint
+
+    virtual_yaw_joint_position_controller:
+        type: position_controllers/JointPositionController
+        joint: virtual_yaw_joint
+
+    arm_base_joint_position_controller:
+        type: position_controllers/JointPositionController
+        joint: arm_base_joint 
+
+    shoulder_flexion_joint_position_controller:
+        type: position_controllers/JointPositionController
+        joint: shoulder_flexion_joint 
+
+    elbow_joint_position_controller:
+        type: position_controllers/JointPositionController
+        joint: elbow_joint 
+
+    wrist_extension_position_controller:
+        type: position_controllers/JointPositionController
+        joint: wrist_extension 

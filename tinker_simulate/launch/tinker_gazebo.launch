@@ -4,9 +4,21 @@
     <include file="$(find gazebo_ros)/launch/empty_world.launch">
         <arg name="world_name" value="$(find tinker_simulate)/worlds/tinker.world"/> 
     </include>
-    <!-- Load the URDF into the ROS Parameter Server -->
-    <param name="robot_description" command="$(find xacro)/xacro.py $(find tinker_description)/robot/tinker-gazebo.urdf.xacro"/>
+
+    <include file="$(find tinker_description)/launch/tinker_description.launch"/>
 
     <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model"  args="-param robot_description -urdf -model tinker"/>
 
+    <!-- load the controllers -->
+    <rosparam file="$(find tinker_simulate)/config/controller.yaml" command="load"/>
+    <node name="controller_spawner" pkg="controller_manager" 
+          type="spawner" respawn="false" output="screen" ns="/tinker" 
+          args="joint_state_controller
+                virtual_x_joint_position_controller
+                virtual_y_joint_position_controller
+                virtual_yaw_joint_position_controller
+                arm_base_joint_position_controller
+                shoulder_flexion_joint_position_controller
+                elbow_joint_position_controller
+                wrist_extension_position_controller" />
 </launch>
